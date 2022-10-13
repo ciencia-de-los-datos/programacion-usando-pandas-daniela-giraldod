@@ -157,9 +157,10 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    tbl0["year"] = tbl0["_c3"].str.split("-")
-    tbl0["year"] = tbl0["_c3"].map(lambda x: x.split("-")[0])
-    return tbl0
+    tabla9 = tbl0
+    tabla9["year"] = tabla9["_c3"].str.split("-")
+    tabla9["year"] = tabla9["_c3"].map(lambda x: x.split("-")[0])
+    return tabla9
 
 
 def pregunta_10():
@@ -176,8 +177,9 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    tbl0 = tbl0.sort_values(["_c2"])
-    punto10 = tbl0.groupby("_c1")["_c2"].apply(lambda x:':'.join(x.astype(str))).reset_index(drop=False)
+    tabla10 = tbl0
+    tabla10 = tabla10.sort_values(["_c2"])
+    punto10 = tabla10.groupby("_c1")["_c2"].apply(lambda x:':'.join(x.astype(str))).reset_index(drop=False)
     
     return punto10
 
