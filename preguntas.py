@@ -34,10 +34,14 @@ def pregunta_02():
     4
 
     """
-    return
+    return len(tbl0.columns)
 
 
 def pregunta_03():
+    
+    resultado = tabla0["_c1"].value_counts(sort = False)
+
+
     """
     ¿Cuál es la cantidad de registros por cada letra de la columna _c1 del archivo
     `tbl0.tsv`?
@@ -51,7 +55,7 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+    return resultado
 
 
 def pregunta_04():
@@ -66,7 +70,7 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+    return tbl0.groupby("_c1")["_c2"].mean()
 
 
 def pregunta_05():
