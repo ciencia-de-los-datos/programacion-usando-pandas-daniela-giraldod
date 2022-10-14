@@ -39,7 +39,7 @@ def pregunta_02():
 
 def pregunta_03():
     
-    resultado = tbl0["_c1"].value_counts(sort = False)
+    resultado = tbl0["_c1"].value_counts().sort_index()
 
 
     """
