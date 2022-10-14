@@ -201,8 +201,9 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    tbl1 = tbl1.sort_values(["_c4"])
-    punto11 = tbl1.groupby("_c0")["_c4"].apply(lambda x:','.join(x.astype(str)))
+    tabla11 = tbl1
+    tabla11 = tabla11.sort_values(["_c4"])
+    punto11 = tabla11.groupby("_c0")["_c4"].apply(lambda x:','.join(x.astype(str)))
    
     return  punto11
 
@@ -222,9 +223,10 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    tbl2["_c5"] = tbl2["_c5a"].map(str) + ":" + tbl2["_c5b"].map(str)
-    tbl2 = tbl2.sort_values(["_c5"])
-    punto12 = tbl2.groupby("_c0")["_c5"].apply(lambda x:','.join(x.astype(str)))
+    tabla12 = tbl2
+    tabla12["_c5"] = tabla12["_c5a"].map(str) + ":" + tabla12["_c5b"].map(str)
+    tabla12 = tabla12.sort_values(["_c5"])
+    punto12 = tabla12.groupby("_c0")["_c5"].apply(lambda x:','.join(x.astype(str)))
     
     return punto12
 
@@ -244,8 +246,6 @@ def pregunta_13():
     Name: _c5b, dtype: int64
     """
     tabla = pd.merge(tbl0,tbl2, on = "_c0" )
-    #tabla["suma"] = tabla["_c1"] + tabla["_c5b"]
-    tabla
     punto13 = tabla.groupby("_c1")["_c5b"].sum()
     
     return punto13
