@@ -181,7 +181,7 @@ def pregunta_10():
     tabla10 = tbl0
     tabla10 = tabla10.sort_values(["_c2"])
     punto10 = tabla10.groupby("_c1")["_c2"].apply(lambda x:':'.join(x.astype(str))).reset_index(drop=False)
-    
+    punto10 = pd.DataFrame(punto10)
     return punto10
 
 
