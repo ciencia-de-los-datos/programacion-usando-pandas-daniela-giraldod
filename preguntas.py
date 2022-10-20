@@ -226,7 +226,7 @@ def pregunta_12():
     tabla12 = tbl2
     tabla12["_c5"] = tabla12["_c5a"].map(str) + ":" + tabla12["_c5b"].map(str)
     tabla12 = tabla12.sort_values(["_c5"])
-    punto12 = tabla12.groupby("_c0")["_c5"].apply(lambda x:','.join(x.astype(str)))
+    punto12 = tabla2.groupby(["_c0"], as_index = False).agg({"_c5":",".join})
     
     return punto12
 
