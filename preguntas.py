@@ -15,6 +15,7 @@ tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
 
 
 def pregunta_01():
+    filas_t0 = len(tbl0)
     """
     ¿Cuál es la cantidad de filas en la tabla `tbl0.tsv`?
 
@@ -22,7 +23,7 @@ def pregunta_01():
     40
 
     """
-    return
+    return filas_t0
 
 
 def pregunta_02():
@@ -33,10 +34,14 @@ def pregunta_02():
     4
 
     """
-    return
+    return len(tbl0.columns)
 
 
 def pregunta_03():
+    
+    resultado = tbl0["_c1"].value_counts().sort_index()
+
+
     """
     ¿Cuál es la cantidad de registros por cada letra de la columna _c1 del archivo
     `tbl0.tsv`?
@@ -50,7 +55,7 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+    return resultado
 
 
 def pregunta_04():
@@ -65,7 +70,7 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+    return tbl0.groupby("_c1")["_c2"].mean()
 
 
 def pregunta_05():
@@ -82,10 +87,15 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+    return tbl0.groupby("_c1")["_c2"].max()
 
 
 def pregunta_06():
+    punto6 = tbl1["_c4"].unique()
+    punto6 = punto6.tolist()
+    punto6 = sorted(list(map(lambda x: x.upper(), punto6)))
+
+    
     """
     Retorne una lista con los valores unicos de la columna _c4 de del archivo `tbl1.csv`
     en mayusculas y ordenados alfabéticamente.
@@ -94,7 +104,7 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+    return punto6
 
 
 def pregunta_07():
@@ -110,7 +120,7 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+    return tbl0.groupby("_c1")["_c2"].sum()
 
 
 def pregunta_08():
@@ -128,7 +138,9 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+    tabla8 = tbl0
+    tabla8["suma"] = tabla8["_c0"]+tabla8["_c2"]
+    return tabla8
 
 
 def pregunta_09():
@@ -146,7 +158,10 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+    tabla9 = tbl0
+    tabla9["year"] = tabla9["_c3"].str.split("-")
+    tabla9["year"] = tabla9["_c3"].map(lambda x: x.split("-")[0])
+    return tabla9
 
 
 def pregunta_10():
@@ -163,7 +178,12 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    tabla10 = tbl0
+    tabla10 = tabla10.sort_values(["_c2"])
+    punto10 = tabla10.groupby("_c1")["_c2"].apply(lambda x:':'.join(x.astype(str))).reset_index(drop=False)
+    punto10.set_index('_c1', inplace=True)
+    
+    return punto10
 
 
 def pregunta_11():
@@ -182,7 +202,13 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+    tabla11 = tbl1
+    tabla11 = tabla11.sort_values(["_c4"])
+    punto11 = tabla11.groupby("_c0")["_c4"].apply(lambda x:','.join(x.astype(str)))
+    punto11=pd.DataFrame(list(punto11.items()),
+                   columns=['_c0', '_c4'])
+   
+    return  punto11
 
 
 def pregunta_12():
@@ -200,7 +226,12 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+    tabla12 = tbl2
+    tabla12["_c5"] = tabla12["_c5a"].map(str) + ":" + tabla12["_c5b"].map(str)
+    tabla12 = tabla12.sort_values(["_c5"])
+    punto12 = tabla12.groupby(["_c0"], as_index = False).agg({"_c5":",".join})
+    
+    return punto12
 
 
 def pregunta_13():
@@ -217,4 +248,7 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+    tabla = pd.merge(tbl0,tbl2, on = "_c0" )
+    punto13 = tabla.groupby("_c1")["_c5b"].sum()
+    
+    return punto13
