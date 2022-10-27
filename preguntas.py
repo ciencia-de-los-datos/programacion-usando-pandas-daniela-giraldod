@@ -204,6 +204,8 @@ def pregunta_11():
     tabla11 = tbl1
     tabla11 = tabla11.sort_values(["_c4"])
     punto11 = tabla11.groupby("_c0")["_c4"].apply(lambda x:','.join(x.astype(str)))
+    punto11=pd.DataFrame(list(punto11.items()),
+                   columns=['_c0', '_c4'])
    
     return  punto11
 
